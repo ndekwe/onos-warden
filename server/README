@@ -6,3 +6,28 @@ setup on server:
 copy server init.d file
 mkdir -p /opt/warden/log
 chmod warden to open
+
+
+Running Warden server in ubuntu 16.04
+-------------------------------------
+* Install go
+  # curl -OL https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
+  # tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gz
+  # export PATH=$PATH:/usr/local/go/bin
+* Setup GOPATH Variable
+  # mkdir /home/user/gows
+  # export GOPATH=/home/user/gows
+  # export PATH=$PATH:$GOPATH/bin
+* Download onos-warden
+  # go get github.com/opennetworkinglab/onos-warden
+* Install Proto
+  # go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+* Install dependencies
+  # go get golang.org/x/net/context
+  # go get google.golang.org/grpc
+* Generate protobuf code
+  # cd $GOPATH/src/github.com/opennetworkinglab/onos-warden/warden
+  # protoc --go_out=plugins=grpc:. warden.proto
+* Now you can start server
+  # cd $GOPATH/src/github.com/opennetworkinglab/onos-warden/server
+  # ./deploy.sh
